@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, Text, Alert, Image} from 'react-native';
+import {ScrollView, Text, Alert} from 'react-native';
 
 import Loading from '../../components/Loading';
 
 import api from '../../config/api';
 import styles from './styles';
-import {FlatList} from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
 
 const DrinkDetails = ({route}) => {
   const {drinkId} = route.params;
@@ -15,21 +15,8 @@ const DrinkDetails = ({route}) => {
 
   useEffect(() => {
     fetchDrink();
+    console.log('teste');
   }, []);
-
-  useEffect(() => {
-    let i = 1;
-    let ingredient;
-    let tmpIngredients = [];
-    do {
-      let ingredient = drink[`strIngredient${i}`];
-      i++;
-      if (ingredient) tmpIngredients.push(ingredient);
-    } while (ingredient !== null && ingredient !== undefined);
-
-    console.log(tmpIngredients);
-    setIngredients(tmpIngredients);
-  }, [drink]);
 
   async function fetchDrink() {
     setLoading(true);
@@ -42,23 +29,50 @@ const DrinkDetails = ({route}) => {
     }
     setLoading(false);
   }
+
+  function showIngredients() {
+    let ingredients = [];
+
+    for (let i = 1; i <= 15; i++) {
+      if (drink['strIngredient' + i] !== null) {
+        if (drink['strMeasure' + i] !== null) {
+          ingredients.push({
+            id: i,
+            text: `• ${drink['strMeasure' + i]} ${drink['strIngredient' + i]}`,
+          });
+        } else {
+          ingredients.push({
+            id: i,
+            text: `• ${drink['strIngredient' + i]}`,
+          });
+        }
+      }
+    }
+
+    return ingredients.map((each) => (
+      <Text style={styles.ingredient} key={each.id}>
+        {each.text}
+      </Text>
+    ));
+  }
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <ScrollView style={styles.container}>
-          <Text style={styles.title}>{drink.strDrink}</Text>
-          <Image
-            resizeMode="contain"
-            source={{
-              uri: drink.strDrinkThumb,
-            }}
-            style={styles.image}
-          />
-          <Text style={styles.title}>Ingredients</Text>
-        </ScrollView>
-      )}
+      {loading && <Loading />}
+      <ScrollView style={styles.container}>
+        <Text style={styles.title}>{drink.strDrink}</Text>
+        <FastImage
+          resizeMode={FastImage.resizeMode.contain}
+          source={{
+            uri: drink.strDrinkThumb,
+          }}
+          style={styles.image}
+        />
+        <Text style={styles.alcoholic}>{drink.strAlcoholic}</Text>
+        <Text style={styles.title}>Ingredients</Text>
+        {drink.strIngredient1 && showIngredients()}
+        <Text style={styles.title}>Preparation mode</Text>
+        <Text style={styles.instructions}>{drink.strInstructions}</Text>
+      </ScrollView>
     </>
   );
 };

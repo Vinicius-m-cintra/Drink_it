@@ -1,28 +1,48 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Text, TouchableHighlight, Image, Alert} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import styles from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 
-const ingredients = [
-  {id: 1, ingredient: 'Absolut Citron'},
-  {id: 2, ingredient: 'Orange juice'},
-  {id: 3, ingredient: 'Triple sec'},
-  {id: 4, ingredient: 'Ginger ale'},
-];
-
 const TryIt = (props) => {
+  const navigation = useNavigation();
   const drink = props.drink.drinks[0];
-  const renderIngredients = ({item}) => (
-    <Text style={styles.item}>{item.ingredient}</Text>
-  );
+
+  function showIngredients() {
+    let ingredients = [];
+
+    for (let i = 1; i <= 15; i++) {
+      if (drink['strIngredient' + i] !== null) {
+        if (drink['strMeasure' + i] !== null) {
+          ingredients.push({
+            id: i,
+            text: `• ${drink['strMeasure' + i]} ${drink['strIngredient' + i]}`,
+          });
+        } else {
+          ingredients.push({
+            id: i,
+            text: `• ${drink['strIngredient' + i]}`,
+          });
+        }
+      }
+    }
+
+    return ingredients.map((each) => (
+      <Text style={styles.item} key={each.id}>
+        {each.text}
+      </Text>
+    ));
+  }
 
   return (
     <View style={styles.container}>
       <>
         <Text style={styles.drinkit}>Drink It...</Text>
         <TouchableHighlight
-          onPress={() => Alert.alert('teste', 'teste')}
+          onPress={() =>
+            navigation.navigate('DrinkDetails', {drinkId: drink.idDrink})
+          }
           style={styles.card}>
           <>
             <Image
@@ -34,11 +54,7 @@ const TryIt = (props) => {
             />
             <View>
               <Text style={styles.title}>{drink.strDrink}</Text>
-              <FlatList
-                data={ingredients}
-                renderItem={renderIngredients}
-                keyExtractor={(ingredient) => ingredient.id}
-              />
+              {showIngredients()}
             </View>
           </>
         </TouchableHighlight>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, ActivityIndicator, StyleSheet} from 'react-native';
+import colors from '../../variables/colors';
 
 const Loading = () => {
   return (
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: colors.darkGreen,
     zIndex: 10,
   },
 });

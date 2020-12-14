@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 5,
     fontSize: 22,
     color: colors.beige,
   },
@@ -20,6 +20,21 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 15,
     borderRadius: 15,
+  },
+  ingredient: {
+    color: '#fff',
+    marginLeft: '5%',
+  },
+  alcoholic: {
+    color: colors.beige,
+    alignSelf: 'flex-end',
+    marginRight: '20%',
+    marginTop: 5,
+  },
+  instructions: {
+    color: '#fff',
+    marginHorizontal: 10,
+    textAlign: 'center',
   },
 });
 

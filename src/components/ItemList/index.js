@@ -4,14 +4,14 @@ import {useNavigation} from '@react-navigation/native';
 
 import styles from './styles';
 
-function Category({category}) {
+function Category({value, typeSearch}) {
   const navigation = useNavigation();
   function redirect() {
-    navigation.push('Drinks', {category: category.strCategory});
+    navigation.push('Drinks', {value: value, typeSearch });
   }
   return (
     <TouchableHighlight onPress={() => redirect()} style={styles.container}>
-      <Text style={styles.title}>{category.strCategory}</Text>
+      <Text style={styles.title}>{value}</Text>
     </TouchableHighlight>
   );
 }

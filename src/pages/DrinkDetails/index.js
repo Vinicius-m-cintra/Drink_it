@@ -10,12 +10,10 @@ import FastImage from 'react-native-fast-image';
 const DrinkDetails = ({route}) => {
   const {drinkId} = route.params;
   const [drink, setDrink] = useState({});
-  const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchDrink();
-    console.log('teste');
   }, []);
 
   async function fetchDrink() {

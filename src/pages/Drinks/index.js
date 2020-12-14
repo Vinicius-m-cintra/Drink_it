@@ -10,7 +10,7 @@ import styles from './styles';
 const Drinks = ({route}) => {
   const [drinks, setDrinks] = useState();
   const [loading, setLoading] = useState(false);
-  const {category} = route.params;
+  const {value, typeSearch} = route.params;
 
   useEffect(() => {
     fetchDrinks();
@@ -19,7 +19,7 @@ const Drinks = ({route}) => {
   async function fetchDrinks() {
     setLoading(true);
     try {
-      const {data} = await api.get(`/filter.php?c=${category}`);
+      const {data} = await api.get(`/filter.php?${typeSearch}=${value}`);
 
       setDrinks(data.drinks);
     } catch (error) {

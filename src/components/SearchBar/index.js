@@ -13,6 +13,7 @@ const SearchBar = ({onChangeText, onSubmit}) => {
         placeholder="Search"
         placeholderTextColor="#fff"
         onChangeText={(e) => onChangeText(e)}
+        onSubmitEditing={() => onSubmit()}
       />
       <TouchableOpacity style={styles.button} onPress={() => onSubmit()}>
         <Icon name="search" size={20} color={colors.gray} />

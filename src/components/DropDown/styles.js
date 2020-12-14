@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 0.5,
     margin: 5,
-    marginTop: 2,
+    marginTop: 10,
     borderColor: colors.beige,
   },
   icon: {

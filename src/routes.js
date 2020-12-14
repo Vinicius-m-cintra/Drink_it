@@ -9,7 +9,7 @@ import colors from './variables/colors';
 const AppStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-import Categories from './pages/Categories';
+import List from './pages/List';
 import DrinkDetails from './pages/DrinkDetails';
 import Drinks from './pages/Drinks';
 import Favorites from './pages/Favorites';
@@ -27,7 +27,7 @@ function DrinkRoutes() {
         },
         headerTintColor: '#fff',
       }}>
-      <AppStack.Screen name="Categories" component={Categories} />
+      <AppStack.Screen name="List" component={List} />
       <AppStack.Screen name="Drinks" component={Drinks} />
       <AppStack.Screen name="DrinkDetails" component={DrinkDetails} />
     </AppStack.Navigator>

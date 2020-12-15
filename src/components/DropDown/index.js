@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 
 import Selectable from '../Selectable';
 import colors from '../../variables/colors';
 import styles from './styles';
 
-const DropDown = ({ setFilterBy }) => {
+const DropDown = ({setFilterBy}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   function choose(value) {
-      setIsOpen(false);
-      setFilterBy(value)
+    setIsOpen(false);
+    setFilterBy(value);
   }
 
   return (
@@ -36,6 +37,10 @@ const DropDown = ({ setFilterBy }) => {
       )}
     </View>
   );
+};
+
+DropDown.propTypes = {
+  setFilterBy: PropTypes.func.isRequired,
 };
 
 export default DropDown;

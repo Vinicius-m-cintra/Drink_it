@@ -1,7 +1,9 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
-import {TouchableHighlight, View, Image, Text} from 'react-native';
+import {TouchableHighlight, View, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
+import PropTypes from 'prop-types';
 
 import styles from './styles';
 
@@ -30,5 +32,9 @@ function Item({drink}) {
     </TouchableHighlight>
   );
 }
+
+Item.propTypes = {
+  drink: PropTypes.object.isRequired,
+};
 
 export default Item;

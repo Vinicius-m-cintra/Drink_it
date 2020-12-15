@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -5,16 +6,15 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import colors from './variables/colors';
-
-const AppStack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-
 import List from './pages/List';
 import DrinkDetails from './pages/DrinkDetails';
 import Drinks from './pages/Drinks';
 import Favorites from './pages/Favorites';
 import Home from './pages/Home';
 import Search from './pages/Search';
+
+const AppStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function DrinkRoutes() {
   return (
@@ -26,7 +26,8 @@ function DrinkRoutes() {
           borderBottomWidth: 0.2,
         },
         headerTintColor: '#fff',
-      }}>
+      }}
+    >
       <AppStack.Screen name="List" component={List} />
       <AppStack.Screen name="Drinks" component={Drinks} />
       <AppStack.Screen name="DrinkDetails" component={DrinkDetails} />
@@ -38,9 +39,10 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        lazy={false}
         initialRouteName="Home"
         screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
+          tabBarIcon: ({color, size}) => {
             let iconName;
 
             switch (route.name) {
@@ -71,7 +73,8 @@ export default function Routes() {
           tabStyle: {
             borderRadius: 10,
           },
-        }}>
+        }}
+      >
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="DrinkRoutes" component={DrinkRoutes} />
         <Tab.Screen name="Search" component={Search} />

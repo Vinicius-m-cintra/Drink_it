@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 
 import styles from './styles';
 import colors from '../../variables/colors';
@@ -20,6 +21,11 @@ const SearchBar = ({onChangeText, onSubmit}) => {
       </TouchableOpacity>
     </View>
   );
+};
+
+SearchBar.propTypes = {
+  onChangeText: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

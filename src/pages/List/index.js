@@ -1,21 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, Alert} from 'react-native';
 
 import styles from './styles';
 
 import ItemList from '../../components/ItemList';
 import Loading from '../../components/Loading';
-import DropDown from '../../components/DropDown'
+import DropDown from '../../components/DropDown';
 import api from '../../config/api';
 
 const Categories = () => {
-  const [filterBy, setFilterBy] = useState('c')
+  const [filterBy, setFilterBy] = useState('c');
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    fetchCategories();
-  }, [filterBy]);
 
   async function fetchCategories() {
     setLoading(true);
@@ -28,6 +24,10 @@ const Categories = () => {
     }
     setLoading(false);
   }
+
+  useEffect(() => {
+    fetchCategories();
+  }, [filterBy]);
 
   return (
     <View style={styles.container}>

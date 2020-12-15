@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react/forbid-prop-types */
+import React, {useState} from 'react';
 import {ScrollView, Text, Alert, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useFocusEffect} from '@react-navigation/native';
+import PropTypes from 'prop-types';
 
 import Loading from '../../components/Loading';
 import api from '../../config/api';
@@ -10,17 +12,11 @@ import styles from './styles';
 import colors from '../../variables/colors';
 import {storeData, getData} from '../../functions/storage';
 
-const DrinkDetails = ({route, navigation}) => {
+const DrinkDetails = ({route}) => {
   const {drinkId} = route.params;
   const [drink, setDrink] = useState({});
   const [loading, setLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchDrink();
-    }, [drinkId]),
-  );
 
   async function fetchDrink() {
     setLoading(true);
@@ -33,21 +29,26 @@ const DrinkDetails = ({route, navigation}) => {
     }
     setLoading(false);
   }
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchDrink();
+    }, [drinkId])
+  );
 
   function showIngredients() {
-    let ingredients = [];
+    const ingredients = [];
 
-    for (let i = 1; i <= 15; i++) {
-      if (drink['strIngredient' + i] !== null) {
-        if (drink['strMeasure' + i] !== null) {
+    for (let i = 1; i <= 15; i += 1) {
+      if (drink[`strIngredient${i}`] !== null) {
+        if (drink[`strMeasure${i}`] !== null) {
           ingredients.push({
             id: i,
-            text: `• ${drink['strMeasure' + i]} ${drink['strIngredient' + i]}`,
+            text: `• ${drink[`strMeasure${i}`]} ${drink[`strIngredient${i}`]}`,
           });
         } else {
           ingredients.push({
             id: i,
-            text: `• ${drink['strIngredient' + i]}`,
+            text: `• ${drink[`strIngredient${i}`]}`,
           });
         }
       }
@@ -61,8 +62,8 @@ const DrinkDetails = ({route, navigation}) => {
   }
 
   async function favorite() {
-    let favorites = await getData();
-    let index = favorites.map((each) => each.idDrink).indexOf(drink.idDrink);
+    const favorites = await getData();
+    const index = favorites.map((each) => each.idDrink).indexOf(drink.idDrink);
     if (index === -1) {
       favorites.push(drink);
       await storeData(favorites);
@@ -102,6 +103,10 @@ const DrinkDetails = ({route, navigation}) => {
       </ScrollView>
     </>
   );
+};
+
+DrinkDetails.propTypes = {
+  route: PropTypes.object.isRequired,
 };
 
 export default DrinkDetails;

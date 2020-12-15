@@ -7,6 +7,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.darkGreen,
     paddingTop: Platform.OS === 'ios' ? 10 : 5,
+    justifyContent: 'space-between',
+  },
+  welcome: {
+    color: '#fff',
+    margin: 5,
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 16,
+    fontStyle: 'italic',
   },
 });
 

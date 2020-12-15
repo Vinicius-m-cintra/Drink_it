@@ -4,11 +4,9 @@ import colors from '../../variables/colors';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     margin: 10,
   },
   card: {
-    padding: 10,
     borderRadius: 5,
     borderColor: colors.beige,
     padding: 5,
@@ -31,9 +29,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: '#f4f4f4',
-    marginLeft: 'auto',
     maxWidth: '100%',
     marginBottom: 10,
+    textAlign: 'center',
   },
   item: {
     color: '#f4f4f4',

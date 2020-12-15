@@ -26,7 +26,7 @@ const Search = () => {
       const {data} = await api.get(`search.php?s=${search}`);
 
       const res = await api.get(`filter.php?i=${search}`);
-      let dashDrinks = [];
+      const dashDrinks = [];
       if (res.data.drinks) {
         res.data.drinks.forEach((each) => {
           if (
@@ -44,7 +44,6 @@ const Search = () => {
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
       Alert.alert('ops', 'Error on fetch data');
       setLoading(false);
     }

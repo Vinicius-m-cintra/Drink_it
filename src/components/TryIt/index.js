@@ -1,27 +1,31 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import {View, Text, TouchableHighlight, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import PropTypes from 'prop-types';
 
 import styles from './styles';
 
-const TryIt = (props) => {
+const TryIt = ({drink}) => {
   const navigation = useNavigation();
-  const drink = props.drink.drinks[0];
+  const [drinkObj] = drink.drinks;
 
   function showIngredients() {
-    let ingredients = [];
+    const ingredients = [];
 
-    for (let i = 1; i <= 15; i++) {
-      if (drink['strIngredient' + i] !== null) {
-        if (drink['strMeasure' + i] !== null) {
+    for (let i = 1; i <= 15; i += 1) {
+      if (drinkObj[`strIngredient${i}`] !== null) {
+        if (drinkObj[`strMeasure${i}`] !== null) {
           ingredients.push({
             id: i,
-            text: `• ${drink['strMeasure' + i]} ${drink['strIngredient' + i]}`,
+            text: `• ${drinkObj[`strMeasure${i}`]} ${
+              drinkObj[`strIngredient${i}`]
+            }`,
           });
         } else {
           ingredients.push({
             id: i,
-            text: `• ${drink['strIngredient' + i]}`,
+            text: `• ${drinkObj[`strIngredient${i}`]}`,
           });
         }
       }
@@ -42,22 +46,21 @@ const TryIt = (props) => {
           onPress={() =>
             navigation.navigate('DrinkRoutes', {
               screen: 'DrinkDetails',
-              params: {drinkId: drink.idDrink},
+              params: {drinkId: drinkObj.idDrink},
             })
           }
-          style={styles.card}>
+          style={styles.card}
+        >
           <>
             <Image
               resizeMode="contain"
               style={styles.thumb}
               source={{
-                uri: drink.strDrinkThumb,
+                uri: drinkObj.strDrinkThumb,
               }}
             />
             <View>
-              <Text style={styles.title}>
-                {drink.strDrink + ' super gostoso'}
-              </Text>
+              <Text style={styles.title}>{drinkObj.strDrink}</Text>
               {showIngredients()}
             </View>
           </>
@@ -65,6 +68,10 @@ const TryIt = (props) => {
       </>
     </View>
   );
+};
+
+TryIt.propTypes = {
+  drink: PropTypes.object.isRequired,
 };
 
 export default TryIt;

@@ -1,5 +1,7 @@
+/* eslint-disable react/forbid-prop-types */
 import React, {useState, useEffect} from 'react';
 import {Text, View, ScrollView} from 'react-native';
+import PropTypes from 'prop-types';
 
 import {getData} from '../../functions/storage';
 import styles from './styles';
@@ -7,6 +9,12 @@ import Item from '../../components/Item';
 
 const Favorites = ({navigation}) => {
   const [favorites, setFavorites] = useState([]);
+
+  function fetchFavorites() {
+    getData().then((res) => {
+      setFavorites(res);
+    });
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -19,13 +27,6 @@ const Favorites = ({navigation}) => {
   useEffect(() => {
     fetchFavorites();
   }, []);
-
-  function fetchFavorites() {
-    getData().then((res) => {
-      console.log(res);
-      setFavorites(res);
-    });
-  }
 
   return (
     <View style={styles.container}>
@@ -43,6 +44,10 @@ const Favorites = ({navigation}) => {
       )}
     </View>
   );
+};
+
+Favorites.propTypes = {
+  navigation: PropTypes.object.isRequired,
 };
 
 export default Favorites;

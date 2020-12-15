@@ -5,7 +5,6 @@ import colors from '../../variables/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     borderRadius: 5,
     borderColor: colors.beige,
     padding: 5,

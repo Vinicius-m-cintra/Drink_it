@@ -1,20 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, Text, Alert} from 'react-native';
+import {ScrollView, Text, Alert, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useFocusEffect} from '@react-navigation/native';
 
 import Loading from '../../components/Loading';
-
 import api from '../../config/api';
 import styles from './styles';
-import FastImage from 'react-native-fast-image';
+import colors from '../../variables/colors';
+import {storeData, getData} from '../../functions/storage';
 
-const DrinkDetails = ({route}) => {
+const DrinkDetails = ({route, navigation}) => {
   const {drinkId} = route.params;
   const [drink, setDrink] = useState({});
   const [loading, setLoading] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  useEffect(() => {
-    fetchDrink();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchDrink();
+    }, [drinkId]),
+  );
 
   async function fetchDrink() {
     setLoading(true);
@@ -53,11 +59,34 @@ const DrinkDetails = ({route}) => {
       </Text>
     ));
   }
+
+  async function favorite() {
+    let favorites = await getData();
+    let index = favorites.map((each) => each.idDrink).indexOf(drink.idDrink);
+    if (index === -1) {
+      favorites.push(drink);
+      await storeData(favorites);
+      setIsFavorite(true);
+    } else {
+      favorites.splice(index);
+      storeData(favorites);
+      setIsFavorite(false);
+    }
+  }
+
   return (
     <>
       {loading && <Loading />}
       <ScrollView style={styles.container}>
         <Text style={styles.title}>{drink.strDrink}</Text>
+        <View style={styles.containerBtn}>
+          <Icon
+            onPress={() => favorite()}
+            color={colors.beige}
+            size={24}
+            name={isFavorite ? 'favorite' : 'favorite-border'}
+          />
+        </View>
         <FastImage
           resizeMode={FastImage.resizeMode.contain}
           source={{

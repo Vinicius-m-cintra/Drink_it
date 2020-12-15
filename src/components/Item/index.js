@@ -8,7 +8,10 @@ import styles from './styles';
 function Item({drink}) {
   const navigation = useNavigation();
   function redirect() {
-    navigation.navigate('DrinkDetails', {drinkId: drink.idDrink});
+    navigation.navigate('DrinkRoutes', {
+      screen: 'DrinkDetails',
+      params: {drinkId: drink.idDrink},
+    });
   }
   return (
     <TouchableHighlight onPress={() => redirect()} style={styles.container}>

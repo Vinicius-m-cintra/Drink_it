@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     backgroundColor: colors.darkGreen,
+    overflow: 'hidden',
   },
   drinkit: {
     fontSize: 34,
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
     color: '#f4f4f4',
     marginLeft: 'auto',
     maxWidth: '100%',
-    overflow: 'hidden',
     marginBottom: 10,
   },
   item: {

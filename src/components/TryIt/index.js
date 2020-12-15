@@ -1,9 +1,8 @@
 import React from 'react';
-import {View, Text, TouchableHighlight, Image, Alert} from 'react-native';
+import {View, Text, TouchableHighlight, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import styles from './styles';
-import {FlatList} from 'react-native-gesture-handler';
 
 const TryIt = (props) => {
   const navigation = useNavigation();
@@ -41,7 +40,10 @@ const TryIt = (props) => {
         <Text style={styles.drinkit}>Drink It...</Text>
         <TouchableHighlight
           onPress={() =>
-            navigation.navigate('DrinkDetails', {drinkId: drink.idDrink})
+            navigation.navigate('DrinkRoutes', {
+              screen: 'DrinkDetails',
+              params: {drinkId: drink.idDrink},
+            })
           }
           style={styles.card}>
           <>
@@ -53,7 +55,9 @@ const TryIt = (props) => {
               }}
             />
             <View>
-              <Text style={styles.title}>{drink.strDrink}</Text>
+              <Text style={styles.title}>
+                {drink.strDrink + ' super gostoso'}
+              </Text>
               {showIngredients()}
             </View>
           </>

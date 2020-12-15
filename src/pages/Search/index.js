@@ -28,19 +28,23 @@ const Search = () => {
       const res = await api.get(`filter.php?i=${search}`);
       let dashDrinks = [];
       if (res.data.drinks) {
-          res.data.drinks.forEach(each => {
-          if(data.drinks.map(dashDrink => dashDrink.idDrink).indexOf(each.idDrink) === -1) {
-            dashDrinks.push(each)
+        res.data.drinks.forEach((each) => {
+          if (
+            data.drinks
+              .map((dashDrink) => dashDrink.idDrink)
+              .indexOf(each.idDrink) === -1
+          ) {
+            dashDrinks.push(each);
           }
-          setDrinks([...data.drinks, ...dashDrinks])
+          setDrinks([...data.drinks, ...dashDrinks]);
         });
       } else {
-        setDrinks(data.drinks)
+        setDrinks(data.drinks);
       }
 
       setLoading(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       Alert.alert('ops', 'Error on fetch data');
       setLoading(false);
     }
@@ -48,16 +52,18 @@ const Search = () => {
 
   return (
     <View style={styles.container}>
-      {loading && <Loading />}
       <SearchBar
         onChangeText={(e) => setSearch(e)}
         onSubmit={() => fetchDrinks()}
-        />
-      <ScrollView style={styles.container}>
-        {drinks &&
-          drinks.length > 0 &&
-          drinks.map((drink) => <Item key={drink.idDrink} drink={drink} />)}
-      </ScrollView>
+      />
+      <View style={styles.container}>
+        {loading && <Loading />}
+        <ScrollView style={styles.container}>
+          {drinks &&
+            drinks.length > 0 &&
+            drinks.map((drink) => <Item key={drink.idDrink} drink={drink} />)}
+        </ScrollView>
+      </View>
     </View>
   );
 };

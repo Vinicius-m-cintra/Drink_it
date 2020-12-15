@@ -38,7 +38,7 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="DrinkRoutes"
+        initialRouteName="Home"
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {
             let iconName;

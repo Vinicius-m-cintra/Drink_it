@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     alignSelf: 'center',
-    marginTop: 15,
     borderRadius: 15,
   },
   ingredient: {
@@ -35,7 +34,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginHorizontal: 10,
     textAlign: 'center',
-    marginBottom: 20
+    marginBottom: 20,
+  },
+  containerBtn: {
+    width: 250,
+    alignSelf: 'center',
+    alignItems: 'flex-end',
   },
 });
 

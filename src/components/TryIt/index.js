@@ -8,24 +8,24 @@ import styles from './styles';
 
 const TryIt = ({drink}) => {
   const navigation = useNavigation();
-  const [drinkObj] = drink.drinks;
 
   function showIngredients() {
     const ingredients = [];
 
     for (let i = 1; i <= 15; i += 1) {
-      if (drinkObj[`strIngredient${i}`] !== null) {
-        if (drinkObj[`strMeasure${i}`] !== null) {
+      if (drink[`strIngredient${i}`] !== null) {
+        if (
+          drink[`strMeasure${i}`] !== null &&
+          drink[`strMeasure${i}`] !== ''
+        ) {
           ingredients.push({
             id: i,
-            text: `• ${drinkObj[`strMeasure${i}`]} ${
-              drinkObj[`strIngredient${i}`]
-            }`,
+            text: `• ${drink[`strMeasure${i}`]} ${drink[`strIngredient${i}`]}`,
           });
         } else {
           ingredients.push({
             id: i,
-            text: `• ${drinkObj[`strIngredient${i}`]}`,
+            text: `• ${drink[`strIngredient${i}`]}`,
           });
         }
       }
@@ -46,7 +46,7 @@ const TryIt = ({drink}) => {
           onPress={() =>
             navigation.navigate('DrinkRoutes', {
               screen: 'DrinkDetails',
-              params: {drinkId: drinkObj.idDrink},
+              params: {drinkId: drink.idDrink},
             })
           }
           style={styles.card}
@@ -56,11 +56,11 @@ const TryIt = ({drink}) => {
               resizeMode="contain"
               style={styles.thumb}
               source={{
-                uri: drinkObj.strDrinkThumb,
+                uri: drink.strDrinkThumb,
               }}
             />
             <View>
-              <Text style={styles.title}>{drinkObj.strDrink}</Text>
+              <Text style={styles.title}>{drink.strDrink}</Text>
               {showIngredients()}
             </View>
           </>

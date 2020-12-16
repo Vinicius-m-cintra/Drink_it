@@ -1,41 +1,35 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, Alert} from 'react-native';
+import {ScrollView, View, Text} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import styles from './styles';
 
 import ItemList from '../../components/ItemList';
 import Loading from '../../components/Loading';
 import DropDown from '../../components/DropDown';
-import api from '../../config/api';
+import {Creators as actions} from '../../store/ducks/filters';
 
 const Categories = () => {
+  const dispatch = useDispatch();
+  const filters = useSelector((state) => state.filters);
   const [filterBy, setFilterBy] = useState('c');
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  async function fetchCategories() {
-    setLoading(true);
-    try {
-      const {data} = await api.get(`./list.php?${filterBy}=list`);
-
-      setCategories(data.drinks);
-    } catch (error) {
-      Alert.alert('Error', 'Error on fetch data');
-    }
-    setLoading(false);
-  }
 
   useEffect(() => {
-    fetchCategories();
+    dispatch(actions.findFiltersRequest(filters, filterBy));
   }, [filterBy]);
 
   return (
     <View style={styles.container}>
-      {loading && <Loading />}
+      {filters.loading && <Loading />}
       <DropDown setFilterBy={setFilterBy} />
+      {filters.error && (
+        <Text style={styles.error}>
+          Error on Fetch Data, Try to reload you app...
+        </Text>
+      )}
       <ScrollView style={styles.container}>
-        {categories &&
-          categories.map((value) => (
+        {filters.data &&
+          filters.data.map((value) => (
             <ItemList
               typeSearch={filterBy}
               key={Object.values(value)[0]}

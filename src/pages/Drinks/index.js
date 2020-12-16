@@ -1,41 +1,32 @@
 /* eslint-disable react/forbid-prop-types */
-import React, {useEffect, useState} from 'react';
-import {ScrollView, Alert} from 'react-native';
+import React, {useEffect} from 'react';
+import {ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Item from '../../components/Item';
 import Loading from '../../components/Loading';
-import api from '../../config/api';
 import styles from './styles';
+import {Creators as actions} from '../../store/ducks/drinks';
 
 const Drinks = ({route}) => {
-  const [drinks, setDrinks] = useState();
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const drinks = useSelector((state) => state.drinks);
   const {value, typeSearch} = route.params;
 
-  async function fetchDrinks() {
-    setLoading(true);
-    try {
-      const {data} = await api.get(`/filter.php?${typeSearch}=${value}`);
-
-      setDrinks(data.drinks);
-    } catch (error) {
-      Alert.alert('Error', 'Error on fetch data');
-    }
-    setLoading(false);
-  }
-
   useEffect(() => {
-    fetchDrinks();
+    dispatch(actions.findDrinksRequest(typeSearch, value));
   }, []);
 
   return (
     <>
-      {loading && <Loading />}
+      {drinks.loading && <Loading />}
       <ScrollView style={styles.container}>
-        {drinks &&
-          drinks.length > 0 &&
-          drinks.map((drink) => <Item key={drink.idDrink} drink={drink} />)}
+        {drinks.data &&
+          drinks.data.length > 0 &&
+          drinks.data.map((drink) => (
+            <Item key={drink.idDrink} drink={drink} />
+          ))}
       </ScrollView>
     </>
   );
